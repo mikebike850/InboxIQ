@@ -255,6 +255,60 @@ for r in get_pending_reminders():
 
 ---
 
+## Deploying to Streamlit Community Cloud
+
+The dashboard reads exclusively from `inboxiq.db` — no API keys are needed at runtime. The ingestion and classification steps run locally; only the resulting database is needed for the live app.
+
+### Option A — Portfolio / demo (empty state)
+
+Deploy without a database. Every tab shows a "No data yet" message. Useful for showcasing the code structure without publishing personal email data.
+
+1. Fork the repo (or use your own)
+2. Push to GitHub
+3. Sign in to [share.streamlit.io](https://share.streamlit.io) → **New app** → select your repo, branch `main`, file `app.py`
+4. Deploy — the app loads immediately. No secrets required.
+
+### Option B — Live personal dashboard (real data)
+
+Run the pipeline locally, then commit the database to a **private** repo so Streamlit Cloud can serve it.
+
+```bash
+# 1. Populate the database locally
+python ingest.py
+python classifier.py
+
+# 2. Allow inboxiq.db to be committed (private repo only)
+#    Remove the *.db line from .gitignore, then:
+git add inboxiq.db
+git commit -m "chore: add populated database"
+git push origin main
+```
+
+The live app refreshes automatically on each push. To pull in new emails: run `ingest.py` + `classifier.py` locally and push again.
+
+### Option C — Full cloud operation (credentials in secrets)
+
+If you want to run ingestion from a cloud environment (e.g. a scheduled GitHub Action) rather than locally, store your Gmail credentials in Streamlit secrets:
+
+1. Copy `.streamlit/secrets.toml.example` → `.streamlit/secrets.toml` and fill in values
+2. In the Streamlit Cloud dashboard: **App settings → Secrets** → paste the same key-value pairs
+3. Generate `GMAIL_TOKEN_B64` after your first local OAuth flow:
+   ```bash
+   python -c "import base64; print(base64.b64encode(open('token.json','rb').read()).decode())"
+   ```
+4. `ANTHROPIC_API_KEY` is read from secrets automatically when `classifier.py` is invoked
+
+### Secrets reference
+
+| Secret | Required for | Where to get it |
+|--------|-------------|-----------------|
+| `ANTHROPIC_API_KEY` | Running `classifier.py` | [console.anthropic.com](https://console.anthropic.com) |
+| `GMAIL_CREDENTIALS_JSON` | Running `ingest.py` without local file | Google Cloud Console → Credentials |
+| `GMAIL_TOKEN_B64` | Non-interactive Gmail auth | Generated locally after first OAuth flow |
+| `INBOXIQ_DB_PATH` | Custom database location | Optional override — default is project root |
+
+---
+
 ## Privacy
 
 All email data is stored locally in `inboxiq.db`. The only outbound API calls are:
