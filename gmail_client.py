@@ -1,4 +1,3 @@
-import os
 import pickle
 from pathlib import Path
 from google.auth.transport.requests import Request

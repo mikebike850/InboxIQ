@@ -1,7 +1,5 @@
 import sqlite3
 import base64
-import email
-import re
 from datetime import datetime
 from pathlib import Path
 from gmail_client import get_gmail_service

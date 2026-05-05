@@ -137,7 +137,7 @@ def generate_reminders():
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Generating reminders...")
     conn = get_db()
 
-    total  = _follow_up_reminders(conn)
+    total = _follow_up_reminders(conn)
     total += _interview_reminders(conn)
     total += _bill_reminders(conn)
     total += _event_reminders(conn)

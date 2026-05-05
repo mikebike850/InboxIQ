@@ -1,4 +1,3 @@
-import os
 import json
 import time
 import sqlite3
@@ -25,7 +24,7 @@ CATEGORIES = [
     'Other'
 ]
 
-SYSTEM_PROMPT = """You are an email classifier for a job seeker's inbox. 
+SYSTEM_PROMPT = """You are an email classifier for a job seeker's inbox.
 Analyze the email and return ONLY a JSON object with no other text.
 
 Categories:

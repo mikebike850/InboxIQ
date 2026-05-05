@@ -7,6 +7,7 @@
 ![Claude API](https://img.shields.io/badge/Claude-Sonnet_4.6-D97706?logo=anthropic&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)
 ![Gmail API](https://img.shields.io/badge/Gmail-API-EA4335?logo=gmail&logoColor=white)
+[![CI](https://github.com/mikebike850/inboxiq/actions/workflows/lint.yml/badge.svg)](https://github.com/mikebike850/inboxiq/actions/workflows/lint.yml)
 
 InboxIQ connects to your Gmail inbox, classifies every email with Claude AI, and surfaces a six-tab dashboard purpose-built for active job seekers — track your pipeline, triage urgent replies, manage bills and event tickets, bulk-unsubscribe from noise, and visualize your search momentum, all from a single local app backed by SQLite.
 

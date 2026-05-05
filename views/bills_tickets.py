@@ -156,10 +156,6 @@ def render():
         if not tickets:
             st.info("No event tickets classified yet.")
         else:
-            n_upcoming = sum(
-                1 for t in tickets
-                if (t['interview_date'] or t['application_date'])
-            )
             n_unread = sum(1 for t in tickets if t['is_read'] == 0)
 
             m1, m2 = st.columns(2)
