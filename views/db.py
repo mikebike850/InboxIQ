@@ -20,6 +20,13 @@ DB_PATH = _resolve_db_path()
 
 
 def get_db():
-    conn = sqlite3.connect(DB_PATH)
+    db_path = _resolve_db_path()
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
+    try:
+        schema = (Path(__file__).parent.parent / "schema.sql").read_text()
+        conn.executescript(schema)
+        conn.commit()
+    except Exception:
+        pass
     return conn
