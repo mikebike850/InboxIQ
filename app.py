@@ -14,7 +14,7 @@ st.sidebar.markdown("---")
 
 page = st.sidebar.radio(
     "Navigate",
-    ["Respond Now", "Job Pipeline", "Application Search", "KPI Dashboard"]
+    ["Respond Now", "Job Pipeline", "Bills & Tickets", "Application Search", "KPI Dashboard", "Unsubscribe Queue"]
 )
 
 st.sidebar.markdown("---")
@@ -29,9 +29,15 @@ if page == "Respond Now":
 elif page == "Job Pipeline":
     from views.job_pipeline import render
     render()
+elif page == "Bills & Tickets":
+    from views.bills_tickets import render
+    render()
 elif page == "Application Search":
     from views.app_search import render
     render()
 elif page == "KPI Dashboard":
     from views.kpi_dashboard import render
+    render()
+elif page == "Unsubscribe Queue":
+    from views.unsubscribe_queue import render
     render()
